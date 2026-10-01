@@ -337,7 +337,7 @@
             end
 
             local function spawnTrailGhost(refImg, zIndex)
-            local ghost = newImage(KATANA_ID, zIndex, Color3.fromRGB(60, 180, 255), 0.55)
+            local ghost = newImage(KATANA_ID, zIndex, Color3.fromRGB(255, 90, 100), 0.55)
             ghost.AnchorPoint = refImg.AnchorPoint
             ghost.Position = refImg.Position
             ghost.Size = refImg.Size
@@ -376,7 +376,7 @@
             logo.Position = UDim2.new(0.5, 0, 0.42, 0)
             logo.ImageTransparency = 1
 
-            local logoGlow = newImage(LOGO_ID, 19, Color3.fromRGB(0, 150, 255), 1)
+            local logoGlow = newImage(LOGO_ID, 19, Color3.fromRGB(220, 30, 40), 1)
             logoGlow.AnchorPoint = Vector2.new(0.5, 0.5)
             logoGlow.Size = UDim2.new(0.58, 0, 0.4, 0)
             logoGlow.Position = UDim2.new(0.5, 0, 0.42, 0)
@@ -558,7 +558,7 @@
             _G.__ZurichAutoGrabGuiStyle = _G.__ZurichAutoGrabGuiStyle or "V1"
             _G.__ZurichInfJumpMode = _G.__ZurichInfJumpMode or "Hold"
             local miniUIVisibility = {
-            Lagger = true,
+            Lagger = false,
             Bypass = false,
             }
 
@@ -590,7 +590,7 @@
             _G.__ZurichStyle2UI = {
             Mode = "GUI 1",
             Bg = "BG 1",
-            Accent = Color3.fromRGB(18, 145, 255),
+            Accent = Color3.fromRGB(220, 30, 40),
             Backgrounds = {
             BLACK_BLUE = "125856387914569",
             BLACK_RED = "122322484509175",
@@ -617,8 +617,7 @@
             }
             }
             _G.__ZurichStyle2UI.MainAccent = function()
-            if _G.__ZurichStyle2UI.Mode == "GUI 2" then return _G.__ZurichStyle2UI.Accent end
-            return (_G.__ZurichCurrentThemeAccent and _G.__ZurichCurrentThemeAccent()) or _G.__ZurichThemeAccent or Color3.fromRGB(55, 181, 255)
+            return Color3.fromRGB(220, 30, 40)
             end
             pcall(function()
             if isfile and readfile and isfile("ZurichAutoBatDesyncConfig.json") then
@@ -923,7 +922,7 @@
             table.insert(lines, "M:guiStyle=" .. (_G.__ZurichStyle2UI.Mode or "GUI 1"))
             table.insert(lines, "M:guiBg=" .. (_G.__ZurichStyle2UI.Bg or "BG 1"))
             table.insert(lines, "M:themePrimary=" .. (_G.__ZurichThemePrimary or "BLACK"))
-            table.insert(lines, "M:themeSecondary=" .. (_G.__ZurichThemeSecondary or "BLUE"))
+            table.insert(lines, "M:themeSecondary=" .. (_G.__ZurichThemeSecondary or "RED"))
             table.insert(lines, "M:tracerOrigin=" .. (_G.__ZurichTracerOrigin or "Down"))
             for feat, key in pairs(FeatureKeybinds) do
             if key then
@@ -1189,6 +1188,8 @@
             end
             end
             loadConfig()
+            _G.__ZurichThemeSecondary = "RED"
+            _G.__ZurichThemeAccent = Color3.fromRGB(220, 30, 40)
             -- E01 Warning es exclusivamente un toggle visual, sin keybind ni bind heredado.
             FeatureKeybinds["Fix E01"] = nil
             FeatureKeybinds["E01 Warning"] = nil
@@ -1198,7 +1199,8 @@
             end
             -- Intro removed
             -- if toggleStates["Intro"] then task.spawn(runIntro) end
-            laggerEnabled = (selectedMode == "Lagger")
+            if selectedMode == "Lagger" then selectedMode = "Normal" end
+            laggerEnabled = false
             speedToggled = toggleStates["Carry Speed"]
             toggleStates["Aimbot"] = false
             toggleStates["Lagger Aimbot"] = false
@@ -1270,7 +1272,7 @@
             Instance.new("UICorner", Panel).CornerRadius = UDim.new(0, 12)
 
             local PanelStroke = Instance.new("UIStroke", Panel)
-            PanelStroke.Color = Color3.fromRGB(55, 181, 255)
+            PanelStroke.Color = Color3.fromRGB(220, 30, 40)
             PanelStroke.Thickness = 1
             PanelStroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
             PanelStroke.LineJoinMode = Enum.LineJoinMode.Round
@@ -1395,6 +1397,10 @@
             BgImage.Position = UDim2.new(0, 0, 0, 0)
             BgImage.BackgroundTransparency = 1
             BgImage.Image = "rbxassetid://118614548396484"
+            -- Force red accent globally
+            secondary = Color3.fromRGB(220, 30, 40)
+            _G.__ZurichThemeAccent = secondary
+            PanelStroke.Color = secondary
             BgImage.ImageTransparency = 0.44
             BgImage.ImageColor3 = Color3.fromRGB(215, 215, 215)
             BgImage.ScaleType = Enum.ScaleType.Crop
@@ -1437,7 +1443,7 @@
             Style2Logo.Visible = false
             Instance.new("UICorner", Style2Logo).CornerRadius = UDim.new(0, 13)
             local Style2LogoStroke = Instance.new("UIStroke", Style2Logo)
-            Style2LogoStroke.Color = Color3.fromRGB(25, 125, 235)
+            Style2LogoStroke.Color = Color3.fromRGB(200, 40, 50)
             Style2LogoStroke.Transparency = 0.45
 
             local Style2Title = Instance.new("TextLabel", Style2Header)
@@ -1474,7 +1480,7 @@
             Style2Subtitle.Position = UDim2.new(0, 0, 0, 34)
             Style2Subtitle.BackgroundTransparency = 1
             Style2Subtitle.Text = "discord.gg/YfBm3pk3Y"
-            Style2Subtitle.TextColor3 = Color3.fromRGB(45, 155, 255)
+            Style2Subtitle.TextColor3 = Color3.fromRGB(255, 80, 90)
             Style2Subtitle.TextSize = 10
             Style2Subtitle.Font = Enum.Font.GothamMedium
             Style2Subtitle.TextXAlignment = Enum.TextXAlignment.Center
@@ -1506,7 +1512,7 @@
             Style2NavFrame:SetAttribute("ZurichThemeIgnore", true)
             Instance.new("UICorner", Style2NavFrame).CornerRadius = UDim.new(0, 22)
             local Style2NavStroke = Instance.new("UIStroke", Style2NavFrame)
-            Style2NavStroke.Color = Color3.fromRGB(35, 130, 230)
+            Style2NavStroke.Color = Color3.fromRGB(200, 40, 50)
             Style2NavStroke.Transparency = 0.5
 
             local Style2PageHeader = Instance.new("Frame", Panel)
@@ -1521,13 +1527,13 @@
             Style2PageHeader:SetAttribute("ZurichThemeIgnore", true)
             Instance.new("UICorner", Style2PageHeader).CornerRadius = UDim.new(0, 22)
             local Style2PageStroke = Instance.new("UIStroke", Style2PageHeader)
-            Style2PageStroke.Color = Color3.fromRGB(35, 130, 230)
+            Style2PageStroke.Color = Color3.fromRGB(200, 40, 50)
             Style2PageStroke.Transparency = 0.45
 
             local Style2PageAccent = Instance.new("Frame", Style2PageHeader)
             Style2PageAccent.Size = UDim2.new(0, 4, 0, 36)
             Style2PageAccent.Position = UDim2.new(0, 15, 0.5, -18)
-            Style2PageAccent.BackgroundColor3 = Color3.fromRGB(20, 135, 255)
+            Style2PageAccent.BackgroundColor3 = Color3.fromRGB(220, 30, 40)
             Style2PageAccent.BorderSizePixel = 0
             Instance.new("UICorner", Style2PageAccent).CornerRadius = UDim.new(1, 0)
 
@@ -1547,7 +1553,7 @@
             Style2PageDesc.Position = UDim2.new(0, 31, 0, 35)
             Style2PageDesc.BackgroundTransparency = 1
             Style2PageDesc.Text = "Speed, movement and mobility tools"
-            Style2PageDesc.TextColor3 = Color3.fromRGB(50, 160, 255)
+            Style2PageDesc.TextColor3 = Color3.fromRGB(255, 80, 90)
             Style2PageDesc.TextSize = 10
             Style2PageDesc.Font = Enum.Font.GothamBold
             Style2PageDesc.TextXAlignment = Enum.TextXAlignment.Left
@@ -2007,14 +2013,14 @@
             })
             topStatusGradient.Rotation = 0
             local topStatusStroke = Instance.new("UIStroke", topStatusBar)
-            topStatusStroke.Color = Color3.fromRGB(0, 120, 240)
+            topStatusStroke.Color = Color3.fromRGB(220, 30, 40)
             topStatusStroke.Thickness = 1.6
             topStatusStroke.Transparency = 0.08
 
             local topTrack = Instance.new("Frame", topStatusBar)
             topTrack.Size = UDim2.new(1, -24, 0, 4)
             topTrack.Position = UDim2.new(0, 12, 1, -8)
-            topTrack.BackgroundColor3 = Color3.fromRGB(0, 120, 240)
+            topTrack.BackgroundColor3 = Color3.fromRGB(220, 30, 40)
             topTrack.BorderSizePixel = 0
             topTrack.ZIndex = 702
             Instance.new("UICorner", topTrack).CornerRadius = UDim.new(1, 0)
@@ -2024,7 +2030,7 @@
             topLeft.Position = UDim2.new(0, 12, 0, 5)
             topLeft.Size = UDim2.new(0.24, -12, 1, -14)
             topLeft.Text = "FPS\n0"
-            topLeft.TextColor3 = Color3.fromRGB(125, 200, 255)
+            topLeft.TextColor3 = Color3.fromRGB(255, 120, 130)
             topLeft.TextSize = 13
             topLeft.Font = Enum.Font.GothamBold
             topLeft.TextXAlignment = Enum.TextXAlignment.Center
@@ -2034,7 +2040,7 @@
             local topLeftDivider = Instance.new("Frame", topStatusBar)
             topLeftDivider.Position = UDim2.new(0.24, 0, 0, 12)
             topLeftDivider.Size = UDim2.new(0, 1, 1, -24)
-            topLeftDivider.BackgroundColor3 = Color3.fromRGB(0, 120, 240)
+            topLeftDivider.BackgroundColor3 = Color3.fromRGB(220, 30, 40)
             topLeftDivider.BackgroundTransparency = 0.48
             topLeftDivider.BorderSizePixel = 0
             topLeftDivider.ZIndex = 702
@@ -2055,7 +2061,7 @@
             topSubtitle.Position = UDim2.new(0.24, 0, 0, 30)
             topSubtitle.Size = UDim2.new(0.52, 0, 0, 15)
             topSubtitle.Text = "STATUS  ·  ONLINE"
-            topSubtitle.TextColor3 = Color3.fromRGB(70, 165, 255)
+            topSubtitle.TextColor3 = Color3.fromRGB(255, 90, 100)
             topSubtitle.TextSize = 9
             topSubtitle.Font = Enum.Font.GothamBold
             topSubtitle.TextXAlignment = Enum.TextXAlignment.Center
@@ -2064,7 +2070,7 @@
             local topRightDivider = Instance.new("Frame", topStatusBar)
             topRightDivider.Position = UDim2.new(0.76, 0, 0, 12)
             topRightDivider.Size = UDim2.new(0, 1, 1, -24)
-            topRightDivider.BackgroundColor3 = Color3.fromRGB(0, 120, 240)
+            topRightDivider.BackgroundColor3 = Color3.fromRGB(220, 30, 40)
             topRightDivider.BackgroundTransparency = 0.48
             topRightDivider.BorderSizePixel = 0
             topRightDivider.ZIndex = 702
@@ -2074,7 +2080,7 @@
             topRight.Position = UDim2.new(0.76, 0, 0, 5)
             topRight.Size = UDim2.new(0.24, -12, 1, -14)
             topRight.Text = "PING\n0 MS"
-            topRight.TextColor3 = Color3.fromRGB(125, 200, 255)
+            topRight.TextColor3 = Color3.fromRGB(255, 120, 130)
             topRight.TextSize = 13
             topRight.Font = Enum.Font.GothamBold
             topRight.TextXAlignment = Enum.TextXAlignment.Center
@@ -2169,7 +2175,7 @@
             enemyWidget.Visible = false
             Instance.new("UICorner", enemyWidget).CornerRadius = UDim.new(0, 8)
             local stroke = Instance.new("UIStroke", enemyWidget)
-            stroke.Color = Color3.fromRGB(0, 120, 240)
+            stroke.Color = Color3.fromRGB(220, 30, 40)
             stroke.Thickness = 1
 
             -- T tulo
@@ -2430,7 +2436,7 @@
             section.Parent = parent
             Instance.new("UICorner", section).CornerRadius = UDim.new(0, 7)
             local sectionStroke = Instance.new("UIStroke", section)
-            sectionStroke.Color = _G.__ZurichThemeAccent or Color3.fromRGB(55, 181, 255)
+            sectionStroke.Color = _G.__ZurichThemeAccent or Color3.fromRGB(220, 30, 40)
             sectionStroke.Thickness = 1
             sectionStroke.Transparency = 0.72
 
@@ -2508,7 +2514,7 @@
             end
 
             _G.__ZurichCurrentThemeAccent = function()
-            return _G.__ZurichThemeAccent or Color3.fromRGB(55, 181, 255)
+            return Color3.fromRGB(220, 30, 40)
             end
 
             local _speedCardRefs = {}
@@ -2805,7 +2811,7 @@
             TweenService:Create(switchDot, TweenInfo.new(0.15), {Position = on and UDim2.new(0, 20, 0.5, -7) or UDim2.new(0, 2, 0.5, -7), BackgroundColor3 = Color3.fromRGB(245, 246, 248)}):Play()
             switchText.Text = on and "ON" or "OFF"
             switchText.Position = on and UDim2.new(0, 2, 0, 0) or UDim2.new(0, 18, 0, 0)
-            TweenService:Create(switchText, TweenInfo.new(0.15), {TextColor3 = on and Color3.fromRGB(70,181,255) or Color3.fromRGB(245,245,248)}):Play()
+            TweenService:Create(switchText, TweenInfo.new(0.15), {TextColor3 = on and Color3.fromRGB(255,80,90) or Color3.fromRGB(245,245,248)}):Play()
             TweenService:Create(switchStroke, TweenInfo.new(0.15), {Color = _G.__ZurichStyle2UI.MainAccent(), Transparency = _G.__ZurichStyle2UI.Mode == "GUI 2" and 1 or (on and 0.15 or 0.55)}):Play()
             TweenService:Create(lbl, TweenInfo.new(0.15), {TextColor3 = Color3.fromRGB(245,245,248)}):Play()
             lbl.Font = on and Enum.Font.GothamBold or Enum.Font.GothamMedium
@@ -2993,7 +2999,7 @@
             TweenService:Create(switchDot,TweenInfo.new(0.15),{Position=active and UDim2.new(0,20,0.5,-7)or UDim2.new(0,2,0.5,-7),BackgroundColor3=Color3.fromRGB(245,246,248)}):Play()
             switchText.Text=active and "ON" or "OFF"
             switchText.Position=active and UDim2.new(0,2,0,0)or UDim2.new(0,18,0,0)
-            TweenService:Create(switchText,TweenInfo.new(0.15),{TextColor3=active and Color3.fromRGB(70,181,255)or Color3.fromRGB(245,245,248)}):Play()
+            TweenService:Create(switchText,TweenInfo.new(0.15),{TextColor3=active and Color3.fromRGB(255,80,90)or Color3.fromRGB(245,245,248)}):Play()
             TweenService:Create(switchStroke,TweenInfo.new(0.15),{Color=_G.__ZurichStyle2UI.MainAccent(),Transparency=_G.__ZurichStyle2UI.Mode=="GUI 2" and 1 or (active and 0.15 or 0.55)}):Play()
             TweenService:Create(lbl,TweenInfo.new(0.15),{TextColor3=Color3.fromRGB(245,245,248)}):Play()
             lbl.Font=active and Enum.Font.GothamBold or Enum.Font.GothamMedium
@@ -3182,7 +3188,7 @@
 
             FeatureToggles = FeatureToggles or {}
             FeatureToggles["SelectNormalMode"] = function() selectMode("Normal") end
-            FeatureToggles["SelectLaggerMode"] = function() selectMode("Lagger") end
+            FeatureToggles["SelectLaggerMode"] = function() end -- lagger removed
             FeatureToggles["SelectDesyncMode"] = function() selectMode("Desync") end
             FeatureToggles["Toggle UI"] = function()
             -- Usar Panel.Visible como fuente de verdad (evita desincronizaci n con la variable local)
@@ -3598,7 +3604,7 @@
             discordLbl.Size = UDim2.new(1, 0, 0, 30)
             discordLbl.Position = UDim2.new(0, 0, 0, 0)
             discordLbl.BackgroundTransparency = 1
-            discordLbl.Text = isLocal and ".gg/zurichub" or ""
+            discordLbl.Text = isLocal and "discord.gg/YfBm3pk3Y" or ""
             discordLbl.Visible = isLocal
             discordLbl.TextColor3 = Color3.new(1, 1, 1)
             discordLbl.Font = Enum.Font.GothamBold
@@ -3608,7 +3614,7 @@
             discordLbl:SetAttribute("ZurichThemeIgnore", true)
             local discordChroma = Instance.new("UIGradient", discordLbl)
             discordChroma.Name = "ZurichAccentGradient"
-            local initialAccent = (_G.__ZurichCurrentThemeAccent and _G.__ZurichCurrentThemeAccent()) or Color3.fromRGB(55, 181, 255)
+            local initialAccent = (_G.__ZurichCurrentThemeAccent and _G.__ZurichCurrentThemeAccent()) or Color3.fromRGB(220, 30, 40)
             discordChroma.Color = ColorSequence.new({
             ColorSequenceKeypoint.new(0, initialAccent:Lerp(Color3.new(0, 0, 0), 0.22)),
             ColorSequenceKeypoint.new(0.5, initialAccent:Lerp(Color3.new(1, 1, 1), 0.42)),
@@ -3645,7 +3651,7 @@
             _G.__ZurichConnect(Player.CharacterAdded, function(char) setupSpeedBillboard(char, true) end)
 
             _G.__ZurichConnect(RunService.RenderStepped, function()
-            local accentColor = (_G.__ZurichCurrentThemeAccent and _G.__ZurichCurrentThemeAccent()) or Color3.fromRGB(55, 181, 255)
+            local accentColor = (_G.__ZurichCurrentThemeAccent and _G.__ZurichCurrentThemeAccent()) or Color3.fromRGB(220, 30, 40)
             local accentGradient = ColorSequence.new({
             ColorSequenceKeypoint.new(0, accentColor:Lerp(Color3.new(0, 0, 0), 0.22)),
             ColorSequenceKeypoint.new(0.5, accentColor:Lerp(Color3.new(1, 1, 1), 0.42)),
@@ -5817,7 +5823,7 @@
             pillFrame.BorderSizePixel = 0
             Instance.new("UICorner", pillFrame).CornerRadius = UDim.new(0, 18)
             local pillStroke = Instance.new("UIStroke", pillFrame)
-            pillStroke.Color = Color3.fromRGB(0, 120, 240)
+            pillStroke.Color = Color3.fromRGB(220, 30, 40)
             pillStroke.Thickness = 1.5
             pillStroke.Transparency = 0.22
 
@@ -5828,22 +5834,25 @@
             content.BackgroundTransparency = 1
             content.ZIndex = 2
 
-            local zurichLogo = Instance.new("ImageLabel", content)
-            zurichLogo.Name = "ZurichLogo"
-            zurichLogo.Size = UDim2.new(0, 56, 0, 56)
-            zurichLogo.Position = UDim2.new(0, 2, 0.5, -28)
-            zurichLogo.BackgroundTransparency = 1
-            zurichLogo.BorderSizePixel = 0
-            zurichLogo.Image = "rbxassetid://94482319349857"
-            zurichLogo.ImageColor3 = Color3.fromRGB(255, 255, 255)
-            zurichLogo.ScaleType = Enum.ScaleType.Fit
-            zurichLogo.ZIndex = 4
-            zurichLogo:SetAttribute("ZurichThemeIgnore", true)
+            local discordGrabLbl = Instance.new("TextLabel", content)
+            discordGrabLbl.Name = "DiscordLabel"
+            discordGrabLbl.Size = UDim2.new(0, 120, 0, 56)
+            discordGrabLbl.Position = UDim2.new(0, 4, 0.5, -28)
+            discordGrabLbl.BackgroundTransparency = 1
+            discordGrabLbl.Text = "discord.gg/\nYfBm3pk3Y"
+            discordGrabLbl.TextColor3 = Color3.fromRGB(220, 30, 40)
+            discordGrabLbl.Font = Enum.Font.GothamBold
+            discordGrabLbl.TextSize = 11
+            discordGrabLbl.TextWrapped = true
+            discordGrabLbl.TextXAlignment = Enum.TextXAlignment.Center
+            discordGrabLbl.TextYAlignment = Enum.TextYAlignment.Center
+            discordGrabLbl.ZIndex = 4
+            discordGrabLbl:SetAttribute("ZurichThemeIgnore", true)
 
             local leftSection = Instance.new("Frame", content)
             leftSection.Name = "LeftSection"
-            leftSection.Position = UDim2.new(0, 64, 0, 0)
-            leftSection.Size = UDim2.new(0, 310, 1, 0)
+            leftSection.Position = UDim2.new(0, 128, 0, 0)
+            leftSection.Size = UDim2.new(0, 250, 1, 0)
             leftSection.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
             leftSection.BackgroundTransparency = 1
             leftSection.BorderSizePixel = 0
@@ -5867,7 +5876,7 @@
 
             progressBar = Instance.new("Frame", progressTrack)
             progressBar.Name = "ProgressFill"; progressBar.Size = UDim2.new(0, 0, 1, 0)
-            progressBar.BackgroundColor3 = Color3.fromRGB(0, 120, 240); progressBar.BorderSizePixel = 0
+            progressBar.BackgroundColor3 = Color3.fromRGB(220, 30, 40); progressBar.BorderSizePixel = 0
             Instance.new("UICorner", progressBar).CornerRadius = UDim.new(1, 0)
             local fillGradient = Instance.new("UIGradient", progressBar)
             fillGradient.Color = ColorSequence.new({
@@ -5876,7 +5885,7 @@
             })
             fillGradient.Rotation = 0
             local leftStroke = Instance.new("UIStroke", leftSection)
-            leftStroke.Color = Color3.fromRGB(0, 120, 240)
+            leftStroke.Color = Color3.fromRGB(220, 30, 40)
             leftStroke.Thickness = 1
             leftStroke.Transparency = 1
 
@@ -5922,7 +5931,7 @@
             rightSection.BorderSizePixel = 0
             Instance.new("UICorner", rightSection).CornerRadius = UDim.new(1, 0)
             local rightStroke = Instance.new("UIStroke", rightSection)
-            rightStroke.Color = Color3.fromRGB(0, 120, 240)
+            rightStroke.Color = Color3.fromRGB(220, 30, 40)
             rightStroke.Thickness = 1
             rightStroke.Transparency = 1
 
@@ -5941,7 +5950,7 @@
             pillStroke.Transparency = 1
             content.Size = UDim2.new(1, 0, 1, 0)
             content.Position = UDim2.new(0, 0, 0, 0)
-            zurichLogo.Visible = false
+            if discordGrabLbl then discordGrabLbl.Visible = false end
             leftSection.Visible = false
             divider.Visible = false
             rightSection.Visible = false
@@ -7679,8 +7688,8 @@
             local C_BG = Color3.fromRGB(0, 0, 0)
             local C_PANEL = Color3.fromRGB(9, 24, 42)
             local C_SURFACE = Color3.fromRGB(12, 12, 14)
-            local C_BORDER = Color3.fromRGB(0, 120, 240)
-            local C_ACCENT = Color3.fromRGB(0, 120, 240)
+            local C_BORDER = Color3.fromRGB(220, 30, 40)
+            local C_ACCENT = Color3.fromRGB(220, 30, 40)
             local C_TEXT = Color3.fromRGB(255, 255, 255)
             local C_TEXT_DIM = Color3.fromRGB(180, 180, 180)
             local C_ALERT = Color3.fromRGB(180, 180, 180)
@@ -7715,7 +7724,7 @@
             BackdropImage.BackgroundTransparency = 1
             BackdropImage.BorderSizePixel = 0
             BackdropImage.ZIndex = 1
-            BackdropImage.Image = "rbxassetid://" .. (_G.__ZurichStyle2UI.MiniBackdrops[(_G.__ZurichThemePrimary or "BLACK") .. "_" .. (_G.__ZurichThemeSecondary or "BLUE")] or _G.__ZurichStyle2UI.MiniBackdrops.BLACK_BLUE)
+            BackdropImage.Image = "rbxassetid://" .. (_G.__ZurichStyle2UI.MiniBackdrops[(_G.__ZurichThemePrimary or "BLACK") .. "_" .. (_G.__ZurichThemeSecondary or "RED")] or _G.__ZurichStyle2UI.MiniBackdrops.BLACK_BLUE)
 
             local MainStroke = Instance.new("UIStroke", Main)
             MainStroke.Thickness = 1.5
@@ -7941,7 +7950,7 @@
             BindBtnStroke.Color = C_BORDER
             ActionBtnStroke.Color = C_BORDER
             VersionStroke.Color = C_BORDER
-            BackdropImage.Image = "rbxassetid://" .. (_G.__ZurichStyle2UI.MiniBackdrops[(_G.__ZurichThemePrimary or "BLACK") .. "_" .. (_G.__ZurichThemeSecondary or "BLUE")] or _G.__ZurichStyle2UI.MiniBackdrops.BLACK_BLUE)
+            BackdropImage.Image = "rbxassetid://" .. (_G.__ZurichStyle2UI.MiniBackdrops[(_G.__ZurichThemePrimary or "BLACK") .. "_" .. (_G.__ZurichThemeSecondary or "RED")] or _G.__ZurichStyle2UI.MiniBackdrops.BLACK_BLUE)
             if ActionBtn.Text == "Bypass: ON" then ActionBtn.BackgroundColor3 = C_ACCENT end
             refreshAutoStealVisual()
             end
@@ -8490,30 +8499,35 @@
             page.Size = UDim2.new(1, 0, 1, 0)
             page.BackgroundTransparency = 1
             page.BorderSizePixel = 0
-            page.ScrollBarThickness = 2
-            page.ScrollBarImageColor3 = _G.__ZurichThemeAccent or Color3.fromRGB(55, 181, 255)
-            page.ScrollBarImageTransparency = 0.5
-            -- En móvil no permitas que el canvas se desplace/bote horizontalmente;
-            -- así los separadores permanecen dentro de la columna de contenido.
+            page.ScrollBarThickness = 8
+            page.ScrollBarImageColor3 = Color3.fromRGB(220, 30, 40)
+            page.ScrollBarImageTransparency = 0.15
             page.ScrollingDirection = Enum.ScrollingDirection.Y
-            page.ElasticBehavior = Enum.ElasticBehavior.Never
+            page.ElasticBehavior = Enum.ElasticBehavior.Always
             page.ClipsDescendants = true
             page.Visible = false
             page.ZIndex = 3
+            page.Active = true
+            page.ScrollingEnabled = true
+            pcall(function() page.AutomaticCanvasSize = Enum.AutomaticSize.Y end)
 
             local padding = Instance.new("UIPadding", page)
             padding.PaddingLeft = UDim.new(0, 4)
-            padding.PaddingRight = UDim.new(0, 4)
+            padding.PaddingRight = UDim.new(0, 10)
             padding.PaddingTop = UDim.new(0, 4)
-            padding.PaddingBottom = UDim.new(0, 6)
+            padding.PaddingBottom = UDim.new(0, 120)
 
             local layout = Instance.new("UIListLayout", page)
             layout.Padding = UDim.new(0, 6)
             layout.SortOrder = Enum.SortOrder.LayoutOrder
 
-            layout:GetPropertyChangedSignal("AbsoluteContentSize"):Connect(function()
-            page.CanvasSize = UDim2.new(0, 0, 0, layout.AbsoluteContentSize.Y + padding.PaddingTop.Offset + padding.PaddingBottom.Offset)
-            end)
+            local function refreshCanvas()
+            local h = layout.AbsoluteContentSize.Y + padding.PaddingTop.Offset + padding.PaddingBottom.Offset + 40
+            page.CanvasSize = UDim2.new(0, 0, 0, math.max(h, page.AbsoluteSize.Y + 1))
+            end
+            layout:GetPropertyChangedSignal("AbsoluteContentSize"):Connect(refreshCanvas)
+            page:GetPropertyChangedSignal("AbsoluteSize"):Connect(refreshCanvas)
+            task.defer(refreshCanvas)
 
             local pagePressing = false
             local pagePressPos = nil
@@ -8600,7 +8614,7 @@
             Instance.new("UICorner", button).CornerRadius = UDim.new(0, 5)
             local border = Instance.new("UIStroke", button)
             border.Name = "TabBorder"
-            border.Color = _G.__ZurichThemeAccent or Color3.fromRGB(55, 181, 255)
+            border.Color = _G.__ZurichThemeAccent or Color3.fromRGB(220, 30, 40)
             border.Thickness = 1
             border.Transparency = 0
 
@@ -8654,7 +8668,7 @@
             if selLayout then
             local padY = 0
             if selPad then padY = selPad.PaddingTop.Offset + selPad.PaddingBottom.Offset end
-            Scroll.CanvasSize = UDim2.new(0, 0, 0, selLayout.AbsoluteContentSize.Y + padY)
+            Scroll.CanvasSize = UDim2.new(0, 0, 0, selLayout.AbsoluteContentSize.Y + padY + 120)
             end
             end
 
@@ -8671,7 +8685,7 @@
             local speedSection = makeUraniumSection(tabPages.Movement, "SPEED")
             _G.__ZurichMakeSubheader(speedSection, "MODOS DE VELOCIDAD")
             makeUraniumSpeedCard(speedSection, "Normal", "Normal Speed", "NormalBoost", "NormalSteal", "SelectNormalMode")
-            makeUraniumSpeedCard(speedSection, "Lagger", "Lagger Speed", "LaggerBoost", "LaggerSteal", "SelectLaggerMode")
+            -- Lagger speed card removed
 
 
             -- CUSTOM SPEEDS
@@ -8851,7 +8865,7 @@
             listeningBindBtn = bindBtn
             listeningFeature = featName
             bindBtn.Text = "..."
-            bindBtn.BackgroundColor3 = Color3.fromRGB(0, 120, 240)
+            bindBtn.BackgroundColor3 = Color3.fromRGB(220, 30, 40)
             end)
             toggleVisualUpdaters[featName] = function()
             refreshBind()
@@ -9160,7 +9174,7 @@
             return 34
             end)
             makeToggle(movementSection, "TP Down", "TP Down")
-            makeToggleNoKeybind(movementSection, "Auto lagger speed", "Auto lagger speed")
+            -- Auto lagger speed removed
             makeToggleNoKeybind(movementSection, "No Animation", "No Animation")
 
             -- COMBAT
@@ -9174,7 +9188,7 @@
             makeToggleNoKeybind(combatSection, "Medusa Delay (4.2s)", "Medusa Steal Delay")
             _G.__ZurichMakeSubheader(combatSection, "ACCIONES")
             makeToggle(combatSection, "Insta Reset", "Insta Reset")
-            makeToggleNoKeybind(combatSection, "𝙎𝙖𝙠𝙪𝙧𝙖.𝙫𝙨", "Anti Bat")
+            makeToggleNoKeybind(combatSection, "Anti Bat · 𝙎𝙖𝙠𝙪𝙧𝙖.𝙫𝙨", "Anti Bat")
 
             _G.__ZurichMakeSubheader(combatSection, "ASISTENCIA DE PUNTERIA")
             makeToggle(combatSection, "Auto Bat", "AutoBat", function(ext)
@@ -9310,7 +9324,7 @@
             refreshAutoBatModePanels()
             return autoBatMode == "Perso" and 108 or (autoBatMode == "V3" and 72 or 36)
             end)
-            makeToggle(combatSection, "Lagger Aimbot", "Lagger Aimbot", function(ext)
+            if false then makeToggle(combatSection, "Lagger Aimbot", "Lagger Aimbot", function(ext)
             local sliderContainer = Instance.new("Frame", ext)
             sliderContainer.Size = UDim2.new(1, -16, 0, 72)
             sliderContainer.Position = UDim2.new(0, 8, 0, 8)
@@ -9369,7 +9383,7 @@
 
             local fill = Instance.new("Frame", sliderBg)
             fill.Size = UDim2.new(0,0,1,0)
-            fill.BackgroundColor3 = Color3.fromRGB(0, 120, 240)
+            fill.BackgroundColor3 = Color3.fromRGB(220, 30, 40)
             fill.BorderSizePixel = 0
             Instance.new("UICorner", fill).CornerRadius = UDim.new(1,0)
 
@@ -9435,6 +9449,7 @@
             updateValue(speedValues[valueKey])
             return 80
             end)
+            end -- Lagger Aimbot UI disabled
 
             makeToggle(combatSection, "Aimbot", "Aimbot", function(ext)
             local sliderContainer = Instance.new("Frame", ext)
@@ -9495,7 +9510,7 @@
 
             local fill = Instance.new("Frame", sliderBg)
             fill.Size = UDim2.new(0,0,1,0)
-            fill.BackgroundColor3 = Color3.fromRGB(0, 120, 240)
+            fill.BackgroundColor3 = Color3.fromRGB(220, 30, 40)
             fill.BorderSizePixel = 0
             Instance.new("UICorner", fill).CornerRadius = UDim.new(1,0)
 
@@ -9702,12 +9717,12 @@
             _G.__visualSection = visualSection
             ;(function()
             local primaryMode = _G.__ZurichThemePrimary or "BLACK"
-            local secondaryMode = _G.__ZurichThemeSecondary or "BLUE"
+            local secondaryMode = _G.__ZurichThemeSecondary or "RED"
             local menuOpen = false
             local primaryButtons = {}
             local secondaryButtons = {}
             local themeImages = {
-            BLACK_BLUE = "117331475733979",
+            BLACK_BLUE = "118614548396484",
             BLACK_RED = "100945937922807",
             BLACK_CONTRAST = "110667667614895",
             WHITE_BLUE = "138948861110720",
@@ -9724,7 +9739,7 @@
             elseif secondaryMode == "CONTRAST" then
             secondary = contrast
             else
-            secondary = Color3.fromRGB(55, 181, 255)
+            secondary = Color3.fromRGB(220, 30, 40)
             end
             return primary, contrast, secondary
             end
@@ -9783,7 +9798,7 @@
             FPSLabel.TextStrokeColor3 = secondary
             BgImage.ImageTransparency = 0.44
             BgImage.ImageColor3 = Color3.fromRGB(215, 215, 215)
-            BgImage.Image = "rbxassetid://" .. (themeImages[primaryMode .. "_" .. secondaryMode] or themeImages.BLACK_BLUE)
+            BgImage.Image = "rbxassetid://118614548396484"
 
             applyObjectTheme(Panel, mainSurface, mainText, secondary)
             for _, obj in ipairs(Panel:GetDescendants()) do applyObjectTheme(obj, mainSurface, mainText, secondary) end
@@ -11372,7 +11387,7 @@
             local function applyGui2RootLayout()
             local currentVp = workspace.CurrentCamera.ViewportSize
             local primaryMode = _G.__ZurichThemePrimary or "BLACK"
-            local secondaryMode = _G.__ZurichThemeSecondary or "BLUE"
+            local secondaryMode = _G.__ZurichThemeSecondary or "RED"
             if secondaryMode == "RED" then
             _G.__ZurichStyle2UI.Accent = Color3.fromRGB(235,55,72)
             elseif secondaryMode == "CONTRAST" then
@@ -11499,7 +11514,7 @@
             toggleBtn.TextColor3 = Color3.fromRGB(220,220,230); toggleBtn.ZIndex = 500; toggleBtn.AutoButtonColor = false
             Instance.new("UICorner", toggleBtn).CornerRadius = UDim.new(0,10)
             local btnStroke = Instance.new("UIStroke", toggleBtn)
-            btnStroke.Color = Color3.fromRGB(0, 120, 240)
+            btnStroke.Color = Color3.fromRGB(220, 30, 40)
             btnStroke.Thickness = 1.2
 
             -- UIScale for panel animation
@@ -11558,10 +11573,10 @@
             while sessionId == _G.__ZurichSessionId do
             task.wait(3)
             if not panelVisible then
-            btnStroke.Color = Color3.fromRGB(0, 120, 240)
+            btnStroke.Color = Color3.fromRGB(220, 30, 40)
             btnStroke.Thickness = 1.5
             task.wait(0.5)
-            btnStroke.Color = Color3.fromRGB(0, 120, 240)
+            btnStroke.Color = Color3.fromRGB(220, 30, 40)
             btnStroke.Thickness = 1.2
             end
             end
@@ -12174,7 +12189,7 @@
             local active = miniUIVisibility[key]
             if active then
             btn.BackgroundColor3 = Color3.fromRGB(15, 40, 70)
-            btnStroke.Color = Color3.fromRGB(0, 150, 255)
+            btnStroke.Color = Color3.fromRGB(220, 30, 40)
             btn.TextColor3 = Color3.fromRGB(120, 200, 255)
             else
             btn.BackgroundColor3 = Color3.fromRGB(28, 28, 32)
@@ -12238,7 +12253,7 @@
             { name = "Carry Speed", label = "CARRY SPEED", x = 78, y = 306 },
             { name = "Insta Reset", label = "INSTA RESET", x = 15, y = 369 },
             { name = "Aimbot", label = "AIMBOT", x = 78, y = 369 },
-            { name = "Lagger Aimbot", label = "LAGGER AIM", x = 15, y = 432 },
+            -- { name = "Lagger Aimbot", label = "LAGGER AIM", x = 15, y = 432 },
             { name = "Autoplay", label = "AUTOPLAY", x = 78, y = 432 },
             { name = "Taunt", label = "TAUNT", x = 15, y = 495 },
             { name = "LockPos", label = "LOCK", x = 78, y = 495 },
@@ -12346,7 +12361,7 @@
             stroke.Transparency = 0.6
             else
             stroke.Thickness = 2
-            stroke.Color = Color3.fromRGB(0, 120, 240)
+            stroke.Color = Color3.fromRGB(220, 30, 40)
             end
 
             local label = Instance.new("TextLabel", btn)
@@ -12356,7 +12371,7 @@
             label.BackgroundTransparency = 1
             label.Text = feat.label
             if feat.name == "Speed Mode" and selectedMode == "Lagger" then label.Text = "LAGGER\nSPEED" end
-            label.TextColor3 = isMobile and Color3.fromRGB(0, 120, 240) or Color3.fromRGB(180, 180, 180)
+            label.TextColor3 = isMobile and Color3.fromRGB(220, 30, 40) or Color3.fromRGB(180, 180, 180)
             label.Font = Enum.Font.GothamBlack
             label.TextSize = 8
             label.TextWrapped = true
@@ -12385,8 +12400,8 @@
             local function updateBtnVisual()
             if feat.name == "LockPos" then
             if isMobile then
-            TweenService:Create(btn, TweenInfo.new(0.15), {BackgroundColor3 = mobileUiLocked and Color3.fromRGB(0, 120, 240) or Color3.fromRGB(0, 0, 0)}):Play()
-            TweenService:Create(label, TweenInfo.new(0.15), {TextColor3 = mobileUiLocked and Color3.fromRGB(255, 255, 255) or Color3.fromRGB(0, 120, 240)}):Play()
+            TweenService:Create(btn, TweenInfo.new(0.15), {BackgroundColor3 = mobileUiLocked and Color3.fromRGB(220, 30, 40) or Color3.fromRGB(0, 0, 0)}):Play()
+            TweenService:Create(label, TweenInfo.new(0.15), {TextColor3 = mobileUiLocked and Color3.fromRGB(255, 255, 255) or Color3.fromRGB(220, 30, 40)}):Play()
             end
             return
             end
@@ -12394,8 +12409,8 @@
             if feat.name == "Auto Bat" and _G.__getAutoBat then active = _G.__getAutoBat() end
             if isMobile then
             TweenService:Create(btn, TweenInfo.new(0.15), {
-            BackgroundColor3 = active and Color3.fromRGB(0, 120, 240) or Color3.fromRGB(0, 0, 0),
-            TextColor3 = active and Color3.fromRGB(255, 255, 255) or Color3.fromRGB(0, 120, 240),
+            BackgroundColor3 = active and Color3.fromRGB(220, 30, 40) or Color3.fromRGB(0, 0, 0),
+            TextColor3 = active and Color3.fromRGB(255, 255, 255) or Color3.fromRGB(220, 30, 40),
             }):Play()
             else
             stroke.Color = Color3.fromRGB(180, 180, 180)
@@ -12446,14 +12461,14 @@
             end)
             btn.MouseEnter:Connect(function()
             if not ((mobileShortcutStates[feat.name] or false) or (toggleStates[feat.name] or false)) then
-            TweenService:Create(btn, TweenInfo.new(0.12), {BackgroundColor3 = Color3.fromRGB(0, 120, 240)}):Play()
+            TweenService:Create(btn, TweenInfo.new(0.12), {BackgroundColor3 = Color3.fromRGB(220, 30, 40)}):Play()
             TweenService:Create(label, TweenInfo.new(0.12), {TextColor3 = Color3.fromRGB(255, 255, 255)}):Play()
             end
             end)
             btn.MouseLeave:Connect(function()
             if not ((mobileShortcutStates[feat.name] or false) or (toggleStates[feat.name] or false)) then
             TweenService:Create(btn, TweenInfo.new(0.12), {BackgroundColor3 = Color3.fromRGB(0, 0, 0)}):Play()
-            TweenService:Create(label, TweenInfo.new(0.12), {TextColor3 = Color3.fromRGB(0, 120, 240)}):Play()
+            TweenService:Create(label, TweenInfo.new(0.12), {TextColor3 = Color3.fromRGB(220, 30, 40)}):Play()
             end
             end)
             else
@@ -12979,10 +12994,10 @@
             frameBackdrop.BackgroundTransparency = 1
             frameBackdrop.BorderSizePixel = 0
             frameBackdrop.ZIndex = 1
-            frameBackdrop.Image = "rbxassetid://" .. (_G.__ZurichStyle2UI.MiniBackdrops[(_G.__ZurichThemePrimary or "BLACK") .. "_" .. (_G.__ZurichThemeSecondary or "BLUE")] or _G.__ZurichStyle2UI.MiniBackdrops.BLACK_BLUE)
+            frameBackdrop.Image = "rbxassetid://" .. (_G.__ZurichStyle2UI.MiniBackdrops[(_G.__ZurichThemePrimary or "BLACK") .. "_" .. (_G.__ZurichThemeSecondary or "RED")] or _G.__ZurichStyle2UI.MiniBackdrops.BLACK_BLUE)
 
             local frameStroke = Instance.new("UIStroke", mainFrame)
-            frameStroke.Color = Color3.fromRGB(0, 120, 240)
+            frameStroke.Color = Color3.fromRGB(220, 30, 40)
             frameStroke.Thickness = 1.5
             frameStroke.ZIndex = 2
 
@@ -13008,7 +13023,7 @@
 
             titleLabel.BackgroundTransparency = 1
 
-            titleLabel.Text = "ZURICH LAGGER"
+            titleLabel.Text = "𝙎𝙖𝙠𝙪𝙧𝙖.𝙫𝙨 LAGGER"
 
             titleLabel.TextColor3 = Color3.fromRGB(180, 180, 180)
 
@@ -13030,7 +13045,7 @@
 
             titleBarLine.Position = UDim2.new(0, 32, 1, -2)
 
-            titleBarLine.BackgroundColor3 = Color3.fromRGB(0, 120, 240)
+            titleBarLine.BackgroundColor3 = Color3.fromRGB(220, 30, 40)
 
             titleBarLine.BackgroundTransparency = 0.35
 
@@ -13243,7 +13258,7 @@
             frameStroke.Color = accent
             titleBarLine.BackgroundColor3 = accent
             if frameBackdrop then
-            frameBackdrop.Image = "rbxassetid://" .. (_G.__ZurichStyle2UI.MiniBackdrops[(_G.__ZurichThemePrimary or "BLACK") .. "_" .. (_G.__ZurichThemeSecondary or "BLUE")] or _G.__ZurichStyle2UI.MiniBackdrops.BLACK_BLUE)
+            frameBackdrop.Image = "rbxassetid://" .. (_G.__ZurichStyle2UI.MiniBackdrops[(_G.__ZurichThemePrimary or "BLACK") .. "_" .. (_G.__ZurichThemeSecondary or "RED")] or _G.__ZurichStyle2UI.MiniBackdrops.BLACK_BLUE)
             end
             if _G.__laggerMainRowStroke then
             _G.__laggerMainRowStroke.Color = accent
@@ -14712,7 +14727,7 @@
 
             -- ==================== AUTO BAT DESYNC ====================
             ;(function()
-            local ABAT_BORDER = Color3.fromRGB(0, 120, 240)
+            local ABAT_BORDER = Color3.fromRGB(220, 30, 40)
             local ABAT_WHITE = Color3.fromRGB(255, 255, 255)
 
             local abatState = {
@@ -15352,7 +15367,7 @@
 
             local function createAntiBatPanel()
             destroyAntiBatPanel()
-            local BLUE = Color3.fromRGB(80, 150, 255)
+            local BLUE = Color3.fromRGB(220, 30, 40)
             local WHITE = Color3.fromRGB(255, 255, 255)
             local FULL_H = 160
             local MINI_H = 44
@@ -15490,7 +15505,7 @@
             tLabel.Size = UDim2.new(1, -16, 1, 0)
             tLabel.Position = UDim2.new(0, 12, 0, 0)
             tLabel.BackgroundTransparency = 1
-            tLabel.Text = "ANTI BAT  ·  OFF"
+            tLabel.Text = "ANTI BAT  ·  KAPALI"
             tLabel.TextColor3 = WHITE
             tLabel.Font = Enum.Font.GothamBold
             tLabel.TextSize = 13
@@ -15498,7 +15513,7 @@
             tLabel.ZIndex = 7
 
             local function setToggleVisual(on)
-            tLabel.Text = on and "ANTI BAT  ·  ON" or "ANTI BAT  ·  OFF"
+            tLabel.Text = on and "ANTI BAT  ·  AÇIK" or "ANTI BAT  ·  KAPALI"
             tStroke.Color = on and Color3.fromRGB(80, 220, 120) or BLUE
             toggleBtn.BackgroundColor3 = on and Color3.fromRGB(18, 42, 28) or Color3.fromRGB(20, 24, 36)
             end
@@ -15584,9 +15599,16 @@
             createAntiBatPanel()
             else
             stopAntiBat()
+            -- panel kalsa da kapatma: kullanıcı kapatabilir; kapalıyken paneli de kapat
+            destroyAntiBatPanel()
             end
             end
-            -- Toggle opens panel + enables feature when turned on
+            FeatureToggles = FeatureToggles or {}
+            FeatureToggles["Anti Bat"] = function()
+            createAntiBatPanel()
+            end
+            _G.__ZurichOpenAntiBatPanel = createAntiBatPanel
+            -- Combat toggle ON = feature + panel
             end)()
 
 
@@ -15822,7 +15844,7 @@
             local skin = SC_SKIN_BY_ID[skinChangerSelection] or SC_SKIN_BY_ID.AUTO_THEME
             if skin.theme then
             primaryMode = primaryMode or _G.__ZurichThemePrimary or "BLACK"
-            secondaryMode = secondaryMode or _G.__ZurichThemeSecondary or "BLUE"
+            secondaryMode = secondaryMode or _G.__ZurichThemeSecondary or "RED"
             return skin, SC_SHIRT_IDS[primaryMode .. "_" .. secondaryMode] or SC_SHIRT_IDS.BLACK_BLUE
             end
             return skin, skin.shirtId or SC_SHIRT_IDS.BLACK_BLUE
@@ -16222,7 +16244,7 @@
             local shirtId = skin.shirtId
             if skin.id == "AUTO_THEME" then
             local primaryMode = _G.__ZurichThemePrimary or "BLACK"
-            local secondaryMode = _G.__ZurichThemeSecondary or "BLUE"
+            local secondaryMode = _G.__ZurichThemeSecondary or "RED"
             shirtId = SC_SHIRT_IDS[primaryMode .. "_" .. secondaryMode] or SC_SHIRT_IDS.BLACK_BLUE
             end
             local shirt = Instance.new("Shirt")
@@ -16698,7 +16720,7 @@
             elseif secondaryMode == "CONTRAST" then
             accentColor = primaryMode == "WHITE" and Color3.fromRGB(0, 0, 0) or Color3.fromRGB(255, 255, 255)
             else
-            accentColor = Color3.fromRGB(0, 120, 240)
+            accentColor = Color3.fromRGB(220, 30, 40)
             end
             return mainColor, accentColor
             end
@@ -16708,7 +16730,7 @@
             end
 
             local function recolorBaseSkinParts(primaryMode, secondaryMode)
-            local mainColor, accentColor = bscColors(primaryMode or _G.__ZurichThemePrimary or "BLACK", secondaryMode or _G.__ZurichThemeSecondary or "BLUE")
+            local mainColor, accentColor = bscColors(primaryMode or _G.__ZurichThemePrimary or "BLACK", secondaryMode or _G.__ZurichThemeSecondary or "RED")
             for part, colorRole in pairs(bscThemedParts) do
             if part and part.Parent then
             part.Color = colorRole == "accent" and accentColor or mainColor
@@ -16941,7 +16963,12 @@
             end
             end)()
 
-            initLagger()
+            -- initLagger() disabled
+            pcall(function()
+            local cg = game:GetService("CoreGui")
+            local old = cg:FindFirstChild("zurichLagger")
+            if old then old:Destroy() end
+            end)
 
             updateMiniUIsVisibility()
 
