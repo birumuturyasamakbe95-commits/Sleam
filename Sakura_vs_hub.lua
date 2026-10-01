@@ -541,7 +541,7 @@
             BypassDepth = 296,
             GuiScale = 1.0,
             MobileButtonScale = 1.0,
-            AutoGrabGuiScale = 1.0,
+            AutoGrabGuiScale = 0.55,
             FOV = 70,
             StretchIntensity = 0.75,
             ConfigLaggerTableIncrease = 290,
@@ -592,28 +592,28 @@
             Bg = "BG 1",
             Accent = Color3.fromRGB(220, 30, 40),
             Backgrounds = {
-            BLACK_BLUE = "125856387914569",
-            BLACK_RED = "122322484509175",
-            BLACK_CONTRAST = "82639707267850",
-            WHITE_BLUE = "117152098884418",
-            WHITE_RED = "130226330127914",
-            WHITE_CONTRAST = "70432987443252",
+            BLACK_BLUE = "118614548396484",
+            BLACK_RED = "118614548396484",
+            BLACK_CONTRAST = "118614548396484",
+            WHITE_BLUE = "118614548396484",
+            WHITE_RED = "118614548396484",
+            WHITE_CONTRAST = "118614548396484",
             },
             BackgroundsV2 = {
-            BLACK_BLUE = "90370524487137",
-            BLACK_RED = "81831276427792",
-            BLACK_CONTRAST = "129729813406715",
-            WHITE_CONTRAST = "135016304210968",
-            WHITE_BLUE = "118569941619818",
-            WHITE_RED = "130214573867256",
+            BLACK_BLUE = "118614548396484",
+            BLACK_RED = "118614548396484",
+            BLACK_CONTRAST = "118614548396484",
+            WHITE_CONTRAST = "118614548396484",
+            WHITE_BLUE = "118614548396484",
+            WHITE_RED = "118614548396484",
             },
             MiniBackdrops = {
-            BLACK_BLUE = "112034756366475",
-            BLACK_RED = "74773491832932",
-            BLACK_CONTRAST = "109918913311479",
-            WHITE_CONTRAST = "102523202610084",
-            WHITE_BLUE = "103569029441146",
-            WHITE_RED = "124293948549983",
+            BLACK_BLUE = "118614548396484",
+            BLACK_RED = "118614548396484",
+            BLACK_CONTRAST = "118614548396484",
+            WHITE_CONTRAST = "118614548396484",
+            WHITE_BLUE = "118614548396484",
+            WHITE_RED = "118614548396484",
             }
             }
             _G.__ZurichStyle2UI.MainAccent = function()
@@ -1325,6 +1325,7 @@
             SidebarTitle.Rotation = -90
             SidebarTitle.BackgroundTransparency = 1
             SidebarTitle.Text = "𝙎𝙖𝙠𝙪𝙧𝙖.𝙫𝙨"
+            SidebarTitle.Visible = false
             SidebarTitle.TextColor3 = Color3.fromRGB(2, 11, 28)
             SidebarTitle.TextTransparency = 0
             SidebarTitle.TextStrokeColor3 = Color3.fromRGB(245, 248, 255)
@@ -1344,6 +1345,7 @@
             FPSLabel.BackgroundTransparency = 1
             FPSLabel.RichText = false
             FPSLabel.Text = "FPS: 0 | PING: 0ms"
+            FPSLabel.Visible = false
             FPSLabel.TextColor3 = Color3.fromRGB(2, 11, 28)
             FPSLabel.TextStrokeColor3 = Color3.fromRGB(245, 248, 255)
             FPSLabel.TextStrokeTransparency = 0
@@ -1401,22 +1403,26 @@
             secondary = Color3.fromRGB(220, 30, 40)
             _G.__ZurichThemeAccent = secondary
             PanelStroke.Color = secondary
-            BgImage.ImageTransparency = 0.44
-            BgImage.ImageColor3 = Color3.fromRGB(215, 215, 215)
+            BgImage.ImageTransparency = 0.25
+            BgImage.ImageColor3 = Color3.fromRGB(255, 255, 255)
+            BgImage.Visible = true
             BgImage.ScaleType = Enum.ScaleType.Crop
             BgImage.ZIndex = 1
             BgImage.Parent = PlaceholderFrame
             Instance.new("UICorner", BgImage).CornerRadius = UDim.new(0, 10)
 
             -- Content Area
+            local RIGHT_TAB_W = isMobile and 72 or 88
             local ContentArea = Instance.new("Frame")
             ContentArea.Name = "ContentArea"
-            ContentArea.Size = UDim2.new(1, -SIDEBAR_W - 10, 1, -GUI_LAYOUT.headerH - GUI_LAYOUT.navH)
-            ContentArea.Position = UDim2.new(0, SIDEBAR_W + 2, 0, GUI_LAYOUT.headerH - 4)
+            -- KuRu style: content left, tabs right
+            ContentArea.Size = UDim2.new(1, -RIGHT_TAB_W - 16, 1, -GUI_LAYOUT.headerH - 8)
+            ContentArea.Position = UDim2.new(0, 10, 0, GUI_LAYOUT.headerH)
             ContentArea.BackgroundTransparency = 1
             ContentArea.BorderSizePixel = 0
             ContentArea.ZIndex = 2
             ContentArea.Parent = Panel
+            _G.__ZurichRightTabW = RIGHT_TAB_W
 
             ;(function()
             local Style2Header = Instance.new("Frame", Panel)
@@ -5771,8 +5777,8 @@
 
             local agFps = 60; local agFrameCount = 0; local agLastTick = 0; local agStatsConn = nil
             local function autoGrabBaseSize()
-            if _G.__ZurichAutoGrabGuiStyle == "V2" then return 330, 80 end
-            return 500, 72
+            if _G.__ZurichAutoGrabGuiStyle == "V2" then return 200, 48 end
+            return 260, 42
             end
             _G.__ZurichAutoGrabBaseSize = autoGrabBaseSize
             local function createProgressGui()
@@ -5788,7 +5794,7 @@
             local savedAutoPos = _G["_ZurichHub_UI_AutoStealPos"]
             local _vs = workspace.CurrentCamera.ViewportSize
             local baseWidth, baseHeight = autoGrabBaseSize()
-            local autoGrabScale = math.clamp(tonumber(speedValues.AutoGrabGuiScale) or 1, 0.70, 1.30)
+            local autoGrabScale = math.clamp(tonumber(speedValues.AutoGrabGuiScale) or 0.55, 0.40, 1.00)
             speedValues.AutoGrabGuiScale = autoGrabScale
             if savedAutoPos and savedAutoPos.x and savedAutoPos.y then
             pillFrame.Position = UDim2.new(0, math.clamp(savedAutoPos.x, 0, math.max(0, _vs.X - baseWidth * autoGrabScale)), 0, math.clamp(savedAutoPos.y, 43 * autoGrabScale, math.max(43 * autoGrabScale, _vs.Y - baseHeight * autoGrabScale)))
@@ -5803,7 +5809,7 @@
             _G.__ZurichApplyAutoGrabScale = function(preserveCenter)
             if not pillFrame.Parent then return end
             local oldScale = pillScale.Scale
-            local newScale = math.clamp(tonumber(speedValues.AutoGrabGuiScale) or 1, 0.70, 1.30)
+            local newScale = math.clamp(tonumber(speedValues.AutoGrabGuiScale) or 0.55, 0.40, 1.00)
             speedValues.AutoGrabGuiScale = newScale
             local position = pillFrame.Position
             if preserveCenter and oldScale ~= newScale then
@@ -5836,13 +5842,13 @@
 
             local discordGrabLbl = Instance.new("TextLabel", content)
             discordGrabLbl.Name = "DiscordLabel"
-            discordGrabLbl.Size = UDim2.new(0, 120, 0, 56)
-            discordGrabLbl.Position = UDim2.new(0, 4, 0.5, -28)
+            discordGrabLbl.Size = UDim2.new(0, 70, 0, 36)
+            discordGrabLbl.Position = UDim2.new(0, 2, 0.5, -18)
             discordGrabLbl.BackgroundTransparency = 1
             discordGrabLbl.Text = "discord.gg/\nYfBm3pk3Y"
             discordGrabLbl.TextColor3 = Color3.fromRGB(220, 30, 40)
             discordGrabLbl.Font = Enum.Font.GothamBold
-            discordGrabLbl.TextSize = 11
+            discordGrabLbl.TextSize = 8
             discordGrabLbl.TextWrapped = true
             discordGrabLbl.TextXAlignment = Enum.TextXAlignment.Center
             discordGrabLbl.TextYAlignment = Enum.TextYAlignment.Center
@@ -5851,8 +5857,8 @@
 
             local leftSection = Instance.new("Frame", content)
             leftSection.Name = "LeftSection"
-            leftSection.Position = UDim2.new(0, 128, 0, 0)
-            leftSection.Size = UDim2.new(0, 250, 1, 0)
+            leftSection.Position = UDim2.new(0, 74, 0, 0)
+            leftSection.Size = UDim2.new(0, 120, 1, 0)
             leftSection.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
             leftSection.BackgroundTransparency = 1
             leftSection.BorderSizePixel = 0
@@ -5892,7 +5898,7 @@
             stealLabel = Instance.new("TextLabel", leftSection)
             stealLabel.Name = "StealLabel"; stealLabel.BackgroundTransparency = 1
             stealLabel.Position = UDim2.new(0, 14, 0, 9); stealLabel.Size = UDim2.new(0, 180, 0, 20)
-            stealLabel.Font = Enum.Font.GothamBlack; stealLabel.Text = "AUTO GRAB"
+            stealLabel.Font = Enum.Font.GothamBlack; stealLabel.Text = "AUTO GRAB"; stealLabel.TextSize = 11
             stealLabel.TextColor3 = Color3.fromRGB(180, 180, 180); stealLabel.TextSize = 12
             stealLabel.TextXAlignment = Enum.TextXAlignment.Left
 
@@ -5924,8 +5930,8 @@
 
             local rightSection = Instance.new("Frame", content)
             rightSection.Name = "RightSection"
-            rightSection.Position = UDim2.new(0, 382, 0, 0)
-            rightSection.Size = UDim2.new(0, 106, 1, 0)
+            rightSection.Position = UDim2.new(1, -72, 0, 0)
+            rightSection.Size = UDim2.new(0, 70, 1, 0)
             rightSection.BackgroundColor3 = Color3.fromRGB(15, 15, 15)
             rightSection.BackgroundTransparency = 1
             rightSection.BorderSizePixel = 0
@@ -6095,7 +6101,7 @@
             if inp.UserInputType ~= Enum.UserInputType.MouseMovement and inp.UserInputType ~= Enum.UserInputType.Touch then return end
             local delta = inp.Position - autoStealDragStart
             local vs = workspace.CurrentCamera.ViewportSize
-            local scale = math.clamp(tonumber(speedValues.AutoGrabGuiScale) or 1, 0.70, 1.30)
+            local scale = math.clamp(tonumber(speedValues.AutoGrabGuiScale) or 0.55, 0.40, 1.00)
             local dragWidth, dragHeight = autoGrabBaseSize()
             local nx = math.clamp(autoStealStartPos.X.Offset + delta.X, 0, math.max(0, vs.X - dragWidth * scale))
             local ny = math.clamp(autoStealStartPos.Y.Offset + delta.Y, 43 * scale, math.max(43 * scale, vs.Y - dragHeight * scale))
@@ -8561,31 +8567,63 @@
             end
             for _, name in ipairs(tabNames) do createTabPage(name) end
 
-            -- Navegacion horizontal inferior.
-            local tabButtonHeight = GUI_LAYOUT.navH - 22
-            local tabButtonGap = 5
+            -- KuRu-style RIGHT vertical tabs
+            local tabButtonGap = 6
+            local rightTabW = _G.__ZurichRightTabW or (isMobile and 72 or 88)
 
             local sideTabContainer = Instance.new("Frame")
             sideTabContainer.Name = "SidebarTabs"
-            sideTabContainer.Size = UDim2.new(1, -20, 0, tabButtonHeight)
-            sideTabContainer.Position = UDim2.new(0, 10, 1, -GUI_LAYOUT.navH + 8)
-            sideTabContainer.BackgroundTransparency = 1
+            sideTabContainer.Size = UDim2.new(0, rightTabW, 1, -GUI_LAYOUT.headerH - 16)
+            sideTabContainer.Position = UDim2.new(1, -rightTabW - 6, 0, GUI_LAYOUT.headerH + 4)
+            sideTabContainer.BackgroundColor3 = Color3.fromRGB(5, 5, 7)
+            sideTabContainer.BackgroundTransparency = 0.15
             sideTabContainer.BorderSizePixel = 0
-            sideTabContainer.ZIndex = 4
+            sideTabContainer.ZIndex = 8
             sideTabContainer.Parent = Panel
+            Instance.new("UICorner", sideTabContainer).CornerRadius = UDim.new(0, 10)
+
+            local sideTabBg = Instance.new("ImageLabel", sideTabContainer)
+            sideTabBg.Name = "SideTabBackground"
+            sideTabBg.Size = UDim2.new(1, 0, 1, 0)
+            sideTabBg.BackgroundTransparency = 1
+            sideTabBg.Image = "rbxassetid://118614548396484"
+            sideTabBg.ImageTransparency = 0.55
+            sideTabBg.ScaleType = Enum.ScaleType.Crop
+            sideTabBg.ZIndex = 8
+            Instance.new("UICorner", sideTabBg).CornerRadius = UDim.new(0, 10)
 
             local sideTabLayout = Instance.new("UIListLayout", sideTabContainer)
-            sideTabLayout.FillDirection = Enum.FillDirection.Horizontal
+            sideTabLayout.FillDirection = Enum.FillDirection.Vertical
             sideTabLayout.HorizontalAlignment = Enum.HorizontalAlignment.Center
-            sideTabLayout.VerticalAlignment = Enum.VerticalAlignment.Center
+            sideTabLayout.VerticalAlignment = Enum.VerticalAlignment.Top
             sideTabLayout.Padding = UDim.new(0, tabButtonGap)
+            sideTabLayout.SortOrder = Enum.SortOrder.LayoutOrder
 
-            -- Nombres exactos de las secciones
+            local sideTabPad = Instance.new("UIPadding", sideTabContainer)
+            sideTabPad.PaddingTop = UDim.new(0, 8)
+            sideTabPad.PaddingBottom = UDim.new(0, 8)
+            sideTabPad.PaddingLeft = UDim.new(0, 4)
+            sideTabPad.PaddingRight = UDim.new(0, 4)
+
+            -- Tab highlight (KuRu style) - parent Panel so UIListLayout does not own it
+            local TabHL = Instance.new("Frame", Panel)
+            TabHL.Name = "TabHighlight"
+            TabHL.ZIndex = 9
+            TabHL.Size = UDim2.new(0, rightTabW - 8, 0, 32)
+            TabHL.Position = UDim2.new(1, -rightTabW - 2, 0, GUI_LAYOUT.headerH + 12)
+            TabHL.BackgroundColor3 = Color3.fromRGB(220, 30, 40)
+            TabHL.BackgroundTransparency = 0.82
+            TabHL.BorderSizePixel = 0
+            Instance.new("UICorner", TabHL).CornerRadius = UDim.new(0, 7)
+            local tabHlStroke = Instance.new("UIStroke", TabHL)
+            tabHlStroke.Color = Color3.fromRGB(220, 30, 40)
+            tabHlStroke.Transparency = 0.3
+
             local tabDisplayNames = {
-            ["Movement"] = "Movement",
-            ["Combat"] = "Combat",
-            ["Visuals"] = "Visuals",
-            ["Animations"] = "Animations",
+            ["Movement"] = "MOVEMENT",
+            ["Combat"] = "COMBAT",
+            ["Visuals"] = "VISUAL",
+            ["Animations"] = "SETTINGS",
             }
 
             local tabButtons = {}
@@ -8593,21 +8631,24 @@
             _G.__ZurichStyle2UI.PageMeta = {
             Movement = {title="Movement", desc="Speed, movement and mobility tools", count="01 / 04"},
             Combat = {title="Combat", desc="Auto hit, grabbing, bat tools and defense", count="02 / 04"},
-            Visuals = {title="Utility", desc="Visuals, interface, camera and player info", count="03 / 04"},
-            Animations = {title="Settings", desc="Animation presets and character motion", count="04 / 04"},
+            Visuals = {title="Visual", desc="Visuals, skins, ESP and camera", count="03 / 04"},
+            Animations = {title="Settings", desc="Config, keybinds and interface", count="04 / 04"},
             }
 
-            for _, name in ipairs(tabNames) do
+            for i, name in ipairs(tabNames) do
             local displayName = tabDisplayNames[name] or name
             local button = Instance.new("TextButton", sideTabContainer)
-            button.Size = UDim2.new(0.25, -4, 1, 0)
-            button.BackgroundColor3 = Color3.fromRGB(3, 16, 38)
-            button.BackgroundTransparency = 1
+            button.LayoutOrder = i
+            button.Size = UDim2.new(1, -4, 0, isMobile and 28 or 34)
+            button.BackgroundColor3 = Color3.fromRGB(16, 17, 20)
+            button.BackgroundTransparency = 0.28
             button.BorderSizePixel = 0
             button.Text = displayName
             button.Font = Enum.Font.GothamBold
-            button.TextSize = isMobile and 8 or 10
-            button.TextColor3 = Color3.fromRGB(245, 245, 248)
+            button.TextSize = isMobile and 9 or 11
+            button.TextColor3 = Color3.fromRGB(125, 125, 125)
+            button.ZIndex = 10
+            button:SetAttribute("TabIndex", i)
             button.AutoButtonColor = false
             button.ZIndex = 5
             button.TextXAlignment = Enum.TextXAlignment.Center
@@ -8669,6 +8710,19 @@
             local padY = 0
             if selPad then padY = selPad.PaddingTop.Offset + selPad.PaddingBottom.Offset end
             Scroll.CanvasSize = UDim2.new(0, 0, 0, selLayout.AbsoluteContentSize.Y + padY + 120)
+            end
+            -- Move KuRu highlight to active tab
+            local ab = tabButtons[selected]
+            if ab and TabHL then
+            task.defer(function()
+            if not ab.Parent or not Panel.Parent then return end
+            local relY = ab.AbsolutePosition.Y - Panel.AbsolutePosition.Y
+            local relX = ab.AbsolutePosition.X - Panel.AbsolutePosition.X
+            game:GetService("TweenService"):Create(TabHL, TweenInfo.new(0.25, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+            Position = UDim2.new(0, relX, 0, relY),
+            Size = UDim2.new(0, math.max(40, ab.AbsoluteSize.X), 0, ab.AbsoluteSize.Y > 0 and ab.AbsoluteSize.Y or 32)
+            }):Play()
+            end)
             end
             end
 
@@ -9723,11 +9777,11 @@
             local secondaryButtons = {}
             local themeImages = {
             BLACK_BLUE = "118614548396484",
-            BLACK_RED = "100945937922807",
-            BLACK_CONTRAST = "110667667614895",
-            WHITE_BLUE = "138948861110720",
-            WHITE_RED = "104964754058502",
-            WHITE_CONTRAST = "88132848967438",
+            BLACK_RED = "118614548396484",
+            BLACK_CONTRAST = "118614548396484",
+            WHITE_BLUE = "118614548396484",
+            WHITE_RED = "118614548396484",
+            WHITE_CONTRAST = "118614548396484",
             }
 
             local function palette()
@@ -9796,9 +9850,10 @@
             SidebarTitle.TextStrokeColor3 = secondary
             FPSLabel.TextColor3 = primary
             FPSLabel.TextStrokeColor3 = secondary
-            BgImage.ImageTransparency = 0.44
-            BgImage.ImageColor3 = Color3.fromRGB(215, 215, 215)
+            BgImage.ImageTransparency = 0.2
+            BgImage.ImageColor3 = Color3.fromRGB(255, 255, 255)
             BgImage.Image = "rbxassetid://118614548396484"
+            BgImage.Visible = true
 
             applyObjectTheme(Panel, mainSurface, mainText, secondary)
             for _, obj in ipairs(Panel:GetDescendants()) do applyObjectTheme(obj, mainSurface, mainText, secondary) end
@@ -10588,12 +10643,12 @@
             Instance.new("UICorner", autoGrabPlus).CornerRadius = UDim.new(0, 5)
 
             local function refreshAutoGrabScale()
-            local scale = math.clamp(tonumber(speedValues.AutoGrabGuiScale) or 1, 0.70, 1.30)
+            local scale = math.clamp(tonumber(speedValues.AutoGrabGuiScale) or 0.55, 0.40, 1.00)
             speedValues.AutoGrabGuiScale = scale
             autoGrabSizeLabel.Text = "Auto Grab Size  " .. math.floor(scale * 100 + 0.5) .. "%"
             end
             local function changeAutoGrabScale(delta)
-            speedValues.AutoGrabGuiScale = math.clamp((tonumber(speedValues.AutoGrabGuiScale) or 1) + delta, 0.70, 1.30)
+            speedValues.AutoGrabGuiScale = math.clamp((tonumber(speedValues.AutoGrabGuiScale) or 0.55) + delta, 0.40, 1.00)
             refreshAutoGrabScale()
             if _G.__ZurichApplyAutoGrabScale then _G.__ZurichApplyAutoGrabScale(true) end
             saveConfig()
@@ -11427,7 +11482,7 @@
             if minCorner then minCorner.CornerRadius = UDim.new(0,14) end
             BgImage.ImageTransparency = 0
             BgImage.ImageColor3 = Color3.fromRGB(255,255,255)
-            BgImage.Image = "rbxassetid://" .. backgroundId
+            BgImage.Image = "rbxassetid://118614548396484"
             _G.__ZurichStyle2UI.Header.Visible = true
             _G.__ZurichStyle2UI.NavFrame.Visible = true
             _G.__ZurichStyle2UI.NavFrame.BackgroundTransparency = 1
@@ -11499,6 +11554,14 @@
             task.defer(function()
             pcall(applyGuiStyle, _G.__ZurichStyle2UI.Mode)
             ScreenGui.Enabled = true
+            Panel.Visible = true
+            BgImage.Image = "rbxassetid://118614548396484"
+            BgImage.ImageTransparency = 0.25
+            BgImage.Visible = true
+            BgImage.ImageColor3 = Color3.fromRGB(255, 255, 255)
+            -- Keep right tabs visible (KuRu layout)
+            local stc = Panel:FindFirstChild("SidebarTabs")
+            if stc then stc.Visible = true; stc.ZIndex = 12 end
             end)
             end)()
 
@@ -13444,8 +13507,8 @@
             local abar = _G.__autoStealBar
             if abar and abar.Parent then
             local _vs = workspace.CurrentCamera.ViewportSize
-            local agScale = math.clamp(tonumber(speedValues.AutoGrabGuiScale) or 1, 0.70, 1.30)
-            local agBaseW = (_G.__ZurichAutoGrabGuiStyle == "V2") and 330 or 500
+            local agScale = math.clamp(tonumber(speedValues.AutoGrabGuiScale) or 0.55, 0.40, 1.00)
+            local agBaseW = (_G.__ZurichAutoGrabGuiStyle == "V2") and 200 or 260
             local agx = math.max(0, (_vs.X - agBaseW * agScale) / 2)
             local aby2 = math.max(43 * agScale, _vs.Y - 190)
             abar.Position = UDim2.new(0, agx, 0, aby2)
@@ -17006,8 +17069,8 @@
             end
 
             if _G.__autoStealBar then
-            local agScale = math.clamp(tonumber(speedValues.AutoGrabGuiScale) or 1, 0.70, 1.30)
-            local agBaseW, agBaseH = 500, 72
+            local agScale = math.clamp(tonumber(speedValues.AutoGrabGuiScale) or 0.55, 0.40, 1.00)
+            local agBaseW, agBaseH = 260, 42
             if _G.__ZurichAutoGrabBaseSize then agBaseW, agBaseH = _G.__ZurichAutoGrabBaseSize() end
             local defaultAgX = math.floor(math.max(0, (vp.X - agBaseW * agScale) / 2))
             local defaultAgY = math.floor(math.max(43 * agScale, vp.Y - 190))
