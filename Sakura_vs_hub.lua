@@ -850,6 +850,7 @@
             ["Katana Cycler"] = false, ["Circle Buttons"] = false,
             ["Sky"] = false, ["Lagger"] = false, ["Speed Boost"] = false,
             ["Toggle UI"] = true,
+            ["UI Lock"] = false,
             ["Show Buttons"] = isMobile,
             ["Auto Steal Speed"] = false,
             ["Intro"] = false,
@@ -3196,6 +3197,9 @@
             FeatureToggles["SelectNormalMode"] = function() selectMode("Normal") end
             FeatureToggles["SelectLaggerMode"] = function() end -- lagger removed
             FeatureToggles["SelectDesyncMode"] = function() selectMode("Desync") end
+            FeaturePostToggle["UI Lock"] = function(active)
+            mobileUiLocked = active and true or false
+            end
             FeatureToggles["Toggle UI"] = function()
             -- Usar Panel.Visible como fuente de verdad (evita desincronizaci n con la variable local)
             if _G.__setPanelVisible then
@@ -8699,9 +8703,11 @@
             end
             local meta = _G.__ZurichStyle2UI.PageMeta[selected]
             if meta then
-            _G.__ZurichStyle2UI.PageTitle.Text = meta.title
-            _G.__ZurichStyle2UI.PageDesc.Text = meta.desc
-            _G.__ZurichStyle2UI.PageCount.Text = meta.count
+            pcall(function()
+            if _G.__ZurichStyle2UI.PageTitle then _G.__ZurichStyle2UI.PageTitle.Text = meta.title end
+            if _G.__ZurichStyle2UI.PageDesc then _G.__ZurichStyle2UI.PageDesc.Text = meta.desc end
+            if _G.__ZurichStyle2UI.PageCount then _G.__ZurichStyle2UI.PageCount.Text = meta.count end
+            end)
             end
             Scroll = tabPages[selected]
             local selLayout = Scroll:FindFirstChildOfClass("UIListLayout")
@@ -8733,7 +8739,34 @@
             end)
             end
 
-            selectSectionTab("Movement")
+            pcall(function() selectSectionTab("Movement") end)
+
+            local function applyKuruRightTabs()
+            local rtw = _G.__ZurichRightTabW or (isMobile and 72 or 88)
+            if sideTabContainer then
+            sideTabContainer.Size = UDim2.new(0, rtw, 1, -GUI_LAYOUT.headerH - 16)
+            sideTabContainer.Position = UDim2.new(1, -rtw - 6, 0, GUI_LAYOUT.headerH + 4)
+            sideTabContainer.Visible = true
+            sideTabContainer.ZIndex = 12
+            local lay = sideTabContainer:FindFirstChildOfClass("UIListLayout")
+            if lay then
+            lay.FillDirection = Enum.FillDirection.Vertical
+            lay.HorizontalAlignment = Enum.HorizontalAlignment.Center
+            lay.VerticalAlignment = Enum.VerticalAlignment.Top
+            end
+            end
+            if ContentArea then
+            ContentArea.Size = UDim2.new(1, -rtw - 16, 1, -GUI_LAYOUT.headerH - 8)
+            ContentArea.Position = UDim2.new(0, 10, 0, GUI_LAYOUT.headerH)
+            end
+            for name, button in pairs(tabButtons or {}) do
+            button.Size = UDim2.new(1, -4, 0, isMobile and 28 or 34)
+            button.Text = (tabDisplayNames and tabDisplayNames[name]) or button.Text
+            button.ZIndex = 13
+            end
+            if TabHL then TabHL.Visible = true; TabHL.ZIndex = 11 end
+            end
+            applyKuruRightTabs()
 
             -- SPEED / MOVEMENT
             local speedSection = makeUraniumSection(tabPages.Movement, "SPEED")
@@ -10701,6 +10734,7 @@
             resetUIContainer.Parent = visualSection
 
             makeToggle(visualSection, "Toggle UI", "Toggle UI")
+            makeToggleNoKeybind(visualSection, "UI Lock", "UI Lock")
 
             -- CONFIG IMPORT / EXPORT
             _G.__ZurichMakeSubheader(visualSection, "CONFIG")
@@ -11427,8 +11461,8 @@
             FPSLabel.Position = UDim2.new(0,sidebarWidth-22,0.49,0)
             ContentArea.Size = UDim2.new(1,-sidebarWidth-10,1,-headerHeight-navHeight)
             ContentArea.Position = UDim2.new(0,sidebarWidth+2,0,headerHeight-4)
-            sideTabContainer.Size = UDim2.new(1,-20,0,navHeight-22)
-            sideTabContainer.Position = UDim2.new(0,10,1,-navHeight+8)
+            -- KuRu right tabs preserved
+            pcall(applyKuruRightTabs)
             _G.__ZurichStyle2UI.Header.Visible = false
             _G.__ZurichStyle2UI.NavFrame.Visible = false
             _G.__ZurichStyle2UI.PageHeader.Visible = false
@@ -11505,13 +11539,10 @@
             _G.__ZurichStyle2UI.PageStroke.Color = _G.__ZurichStyle2UI.Accent
             _G.__ZurichStyle2UI.NavStroke.Transparency = 1
             _G.__ZurichStyle2UI.PageStroke.Transparency = 0.64
-            sideTabContainer.Size = UDim2.new(1,-44,0,32)
-            sideTabContainer.Position = UDim2.new(0,22,0,78)
-            ContentArea.Size = UDim2.new(1,-28,1,-124)
-            ContentArea.Position = UDim2.new(0,14,0,114)
+            pcall(applyKuruRightTabs)
             for name, button in pairs(tabButtons) do
-            button.Text = gui2TabNames[name] or name
-            button.Size = UDim2.new(0.25,-5,1,0)
+            button.Text = tabDisplayNames[name] or gui2TabNames[name] or name
+            -- keep vertical size from applyKuruRightTabs
             local tabAccent = button:FindFirstChild("TabAccent")
             if not tabAccent then
             tabAccent = Instance.new("Frame",button)
@@ -11552,16 +11583,21 @@
             _G.__ZurichRefreshGuiStyle = function() if _G.__ZurichStyle2UI.Mode == "GUI 2" then applyGuiStyle("GUI 2") end end
             _G.__ZurichRefreshGuiStyleCards = function() if _G.__ZurichStyle2UI.Mode == "GUI 2" then applyStyle2Cards() end end
             task.defer(function()
-            pcall(applyGuiStyle, _G.__ZurichStyle2UI.Mode)
+            pcall(function()
+            pcall(applyGuiStyle, _G.__ZurichStyle2UI.Mode or "GUI 1")
+            pcall(applyKuruRightTabs)
+            end)
             ScreenGui.Enabled = true
-            Panel.Visible = true
+            if Panel then Panel.Visible = true end
+            if BgImage then
             BgImage.Image = "rbxassetid://118614548396484"
             BgImage.ImageTransparency = 0.25
             BgImage.Visible = true
             BgImage.ImageColor3 = Color3.fromRGB(255, 255, 255)
-            -- Keep right tabs visible (KuRu layout)
-            local stc = Panel:FindFirstChild("SidebarTabs")
+            end
+            local stc = Panel and Panel:FindFirstChild("SidebarTabs")
             if stc then stc.Visible = true; stc.ZIndex = 12 end
+            pcall(function() selectSectionTab(_G.__ZurichStyle2UI.SelectedTab or "Movement") end)
             end)
             end)()
 
@@ -11718,8 +11754,7 @@
             FPSLabel.Position = UDim2.new(0, newSidW - 22, 0.49, 0)
             ContentArea.Size = UDim2.new(1, -newSidW - 10, 1, -newHeaderH - newNavH)
             ContentArea.Position = UDim2.new(0, newSidW + 2, 0, newHeaderH - 4)
-            sideTabContainer.Size = UDim2.new(1, -20, 0, newNavH - 22)
-            sideTabContainer.Position = UDim2.new(0, 10, 1, -newNavH + 8)
+            pcall(applyKuruRightTabs)
             local pos = Panel.Position
             Panel.Position = UDim2.new(
             pos.X.Scale, math.floor(pos.X.Offset),
@@ -12319,9 +12354,8 @@
             -- { name = "Lagger Aimbot", label = "LAGGER AIM", x = 15, y = 432 },
             { name = "Autoplay", label = "AUTOPLAY", x = 78, y = 432 },
             { name = "Taunt", label = "TAUNT", x = 15, y = 495 },
-            { name = "LockPos", label = "LOCK", x = 78, y = 495 },
-            { name = "TP Bat", label = "TP BAT", x = 15, y = 558 },
-            { name = "Speed Mode", label = "NORMAL\nSPEED", x = 78, y = 558 },
+            { name = "TP Bat", label = "TP BAT", x = 15, y = 495 },
+            { name = "Speed Mode", label = "NORMAL\nSPEED", x = 78, y = 495 },
             }
             _G.__mobileBtnConfigs = mobileButtonConfigs
 
@@ -17125,3 +17159,26 @@
             buildMobilePanel()
             end
             -- ==============================================================================
+
+-- SAFETY_BOOT_SAKURA
+pcall(function()
+    task.defer(function()
+        local cg = game:GetService("CoreGui")
+        local sg = cg:FindFirstChild("ZURICH_Panel") or cg:FindFirstChild("Sakura_vs") 
+        if not sg then
+            for _,c in ipairs(cg:GetChildren()) do
+                if c:IsA("ScreenGui") and c:FindFirstChild("Panel") then sg = c break end
+            end
+        end
+        if sg then
+            sg.Enabled = true
+            local p = sg:FindFirstChild("Panel")
+            if p then p.Visible = true end
+            local tabs = p and p:FindFirstChild("SidebarTabs")
+            if tabs then tabs.Visible = true end
+        end
+        if type(_G.__ZurichApplyGuiStyle) == "function" then
+            pcall(_G.__ZurichApplyGuiStyle, "GUI 1")
+        end
+    end)
+end)
