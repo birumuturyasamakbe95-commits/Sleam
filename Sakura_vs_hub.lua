@@ -592,28 +592,28 @@
             Bg = "BG 1",
             Accent = Color3.fromRGB(220, 30, 40),
             Backgrounds = {
-            BLACK_BLUE = "118614548396484",
-            BLACK_RED = "118614548396484",
-            BLACK_CONTRAST = "118614548396484",
-            WHITE_BLUE = "118614548396484",
-            WHITE_RED = "118614548396484",
-            WHITE_CONTRAST = "118614548396484",
+            BLACK_BLUE = "91054587901017",
+            BLACK_RED = "91054587901017",
+            BLACK_CONTRAST = "91054587901017",
+            WHITE_BLUE = "91054587901017",
+            WHITE_RED = "91054587901017",
+            WHITE_CONTRAST = "91054587901017",
             },
             BackgroundsV2 = {
-            BLACK_BLUE = "118614548396484",
-            BLACK_RED = "118614548396484",
-            BLACK_CONTRAST = "118614548396484",
-            WHITE_CONTRAST = "118614548396484",
-            WHITE_BLUE = "118614548396484",
-            WHITE_RED = "118614548396484",
+            BLACK_BLUE = "91054587901017",
+            BLACK_RED = "91054587901017",
+            BLACK_CONTRAST = "91054587901017",
+            WHITE_CONTRAST = "91054587901017",
+            WHITE_BLUE = "91054587901017",
+            WHITE_RED = "91054587901017",
             },
             MiniBackdrops = {
-            BLACK_BLUE = "118614548396484",
-            BLACK_RED = "118614548396484",
-            BLACK_CONTRAST = "118614548396484",
-            WHITE_CONTRAST = "118614548396484",
-            WHITE_BLUE = "118614548396484",
-            WHITE_RED = "118614548396484",
+            BLACK_BLUE = "91054587901017",
+            BLACK_RED = "91054587901017",
+            BLACK_CONTRAST = "91054587901017",
+            WHITE_CONTRAST = "91054587901017",
+            WHITE_BLUE = "91054587901017",
+            WHITE_RED = "91054587901017",
             }
             }
             _G.__ZurichStyle2UI.MainAccent = function()
@@ -1396,7 +1396,7 @@
             BgImage.Size = UDim2.new(1, 0, 1, 0)
             BgImage.Position = UDim2.new(0, 0, 0, 0)
             BgImage.BackgroundTransparency = 1
-            BgImage.Image = "rbxassetid://118614548396484"
+            BgImage.Image = "rbxassetid://91054587901017"
             -- Force red accent globally
             secondary = Color3.fromRGB(220, 30, 40)
             _G.__ZurichThemeAccent = secondary
@@ -9723,12 +9723,12 @@
             local primaryButtons = {}
             local secondaryButtons = {}
             local themeImages = {
-            BLACK_BLUE = "118614548396484",
-            BLACK_RED = "118614548396484",
-            BLACK_CONTRAST = "118614548396484",
-            WHITE_BLUE = "118614548396484",
-            WHITE_RED = "118614548396484",
-            WHITE_CONTRAST = "118614548396484",
+            BLACK_BLUE = "91054587901017",
+            BLACK_RED = "91054587901017",
+            BLACK_CONTRAST = "91054587901017",
+            WHITE_BLUE = "91054587901017",
+            WHITE_RED = "91054587901017",
+            WHITE_CONTRAST = "91054587901017",
             }
 
             local function palette()
@@ -9799,7 +9799,7 @@
             FPSLabel.TextStrokeColor3 = secondary
             BgImage.ImageTransparency = 0.2
             BgImage.ImageColor3 = Color3.fromRGB(255, 255, 255)
-            BgImage.Image = "rbxassetid://118614548396484"
+            BgImage.Image = "rbxassetid://91054587901017"
             BgImage.Visible = true
 
             applyObjectTheme(Panel, mainSurface, mainText, secondary)
@@ -11429,7 +11429,7 @@
             if minCorner then minCorner.CornerRadius = UDim.new(0,14) end
             BgImage.ImageTransparency = 0
             BgImage.ImageColor3 = Color3.fromRGB(255,255,255)
-            BgImage.Image = "rbxassetid://118614548396484"
+            BgImage.Image = "rbxassetid://91054587901017"
             _G.__ZurichStyle2UI.Header.Visible = true
             _G.__ZurichStyle2UI.NavFrame.Visible = true
             _G.__ZurichStyle2UI.NavFrame.BackgroundTransparency = 1
@@ -11502,7 +11502,7 @@
             pcall(applyGuiStyle, _G.__ZurichStyle2UI.Mode)
             ScreenGui.Enabled = true
             Panel.Visible = true
-            BgImage.Image = "rbxassetid://118614548396484"
+            BgImage.Image = "rbxassetid://91054587901017"
             BgImage.ImageTransparency = 0.25
             BgImage.Visible = true
             BgImage.ImageColor3 = Color3.fromRGB(255, 255, 255)
@@ -15279,7 +15279,7 @@
             local _antiBatSpeed = 10000
             local _antiBatAngle = 0
             local _antiBatDirection = 1
-            local ANTI_BAT_BG_ASSET = "72824795089362"
+            local ANTI_BAT_BG_ASSET = "92435291918075"
 
             local function stopAntiBat()
             antiBatEnabled = false
